@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+         $(document).ready(function(){
+                var arr=window.location.href.split('/');
+            $.get("http://localhost:1080/administrator/getupdate/"+arr[arr.length-1],(data,status)=>{
+            $('#company').html(data.productcompany);
+            $('#pdimage').html(data.productimage);
+            $('#pdname').html(data.productname);
+            $('#pdprice').html(data.productprice);
+            });
+        });
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+<body>
+    <form method="post" action="/administrator/postupdate" enctype="application/x-www-form-urlencoded">
+       <div id="company"></div>
+       <div id="pdimage"></div>
+       <div id="pdname"></div>
+       <div id="pdprice"></div>
+          <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+    <a onclick="return confirm('Are you sure to delete <%= sv.hoten%> ?')" href="/admin"></a>
+    <div><input type="button" value="buy" onclick="addToCard()"> </div>
+     <div style="font-size: 20px;"></div>
+     <input type="text" value="Cancel" onclick="onDeleteProduct()">
+     <div style="font-weight: bold; color: rgb(27, 216, 216); font-size: 20px;"></div>
+</body>
+</html>

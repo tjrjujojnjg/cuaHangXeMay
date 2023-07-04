@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/motorcycle-list.css">
+<link rel="stylesheet" href="/css/advertisement.css">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.get("http://localhost:1080/", (data, status) => {
+                $('#content').html(data);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var user = localStorage.getItem("user");
+            if (user == null || user == undefined || user === "") {
+                $("#user").html("Hân hạnh phục vụ Quý Khách!")
+            }
+            else {
+                var objusser = JSON.parse(user);
+                $("#user").html('Chào ' + objusser.username + ' hân hạnh được phục vụ bạn!!!');
+            }
+        });
+        function logout() {
+            localStorage.removeItem("user");
+            window.location.href = "/home";
+        }
+        function addToCard(productId) {
+            var shoppingCard = localStorage.getItem("shoppingCard");
+            var user = localStorage.getItem("user");
+            if (user == null || user == undefined || user === "") {
+                alert("Mời bạn đăng nhập khi đặt hàng để tiện liên lạc!!!");
+                window.location.href = "/login";
+            }
+            else {
+                if (shoppingCard == null || shoppingCard == undefined) {
+                    shoppingCard = [productId];
+                }
+                else {
+                    shoppingCard = JSON.parse(shoppingCard);
+                    if (shoppingCard.indexOf(productId) == -1) {
+                        shoppingCard.push(productId);
+                    }
+                }
+                localStorage.setItem("shoppingCard", JSON.stringify(shoppingCard))
+            }
+        }
+        function shoppingCard() {
+            window.location.href = "/shopping-card" //dia chi
+        }
+        function lichsumuahang() {
+            var user = localStorage.getItem("user");
+            var objusser = JSON.parse(user);
+            window.location.href = `/history/${objusser.id}`;
+        }
+    </script>
+    <title>Motorcycle List</title>
+    <style>
+        .link-tieu-de {
+            padding: 0px 20px;
+            color: black;
+            font-weight: 700;
+
+        }
+
+        .link-tieu-de:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+        .tieu-de {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .nav-header {
+            height: 80px;
+            border-bottom: 1px solid #f8f8f8;
+            border-top: 1px solid #f8f8f8;
+
+            width: 100%;
+        }
+
+        .khachhang {
+            height: 80px;
+        }
+
+        .idkhang {
+            margin-top: 20px;
+        }
+
+        .button-kh {
+            margin-left: 150px;
+        }
+
+        .chucnang {
+            border-radius: 5px;
+            margin: 0px 3px;
+            background-color: black;
+            color: #fff;
+            border: none;
+        }
+
+        .chucnang:hover {
+            transition: 0.5s;
+            background-color: red;
+        }
+        .product{
+            margin: 30px 0px;
+        }
+        .mua{
+            background-color: red;
+            color: #fff;
+            margin-left: 70px;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="main-header">
+        <header class="row pannel">SAIGON'S MOTORBIKE</header>
+        <nav class="nav-header">
+            <div class="tieu-de">
+                <a href="/home" class="link-tieu-de">Home</a>
+                <a href="/list/Yamaha" class="link-tieu-de">Yamaha</a>
+                <a href="/list/Honda" class="link-tieu-de">Honda</a>
+                <a href="/list/Suzuki" class="link-tieu-de">Suzuki</a>
+                <a href="/list/SYM" class="link-tieu-de">SYM</a>
+            </div>
+
+        </nav>
+        <div class="container khachhang">
+            <div class="row">
+
+                <div class="col-6 idkhang">
+
+                    <img src="./images/id.jpg" style="width: 50px;height: 40px;border: 1px;">
+                    <span id="user" style="font-weight: bold;"></span>
+                </div>
+                <div class="col-6 idkhang">
+                    <div class="button-kh">
+                        <button onclick="logout()" class="chucnang">Đăng xuất</button>
+                        <button onclick="shoppingCard()" class="chucnang">Shopping Card</button>
+                        <button onclick="lichsumuahang()" class="chucnang">Lịch sử mua hàng</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <section class="">
+            <article class="">
+                <h1 style="text-align: center;">MOTORCYCLE LIST</h1>
+                <div class="product">
+                    <div class="container">
+                        <div id="content"></div>
+                    </div>
+                </div>
+                   
+             
+            </article>
+
+        </section>
+    </div>
+</body>
+
+</html>

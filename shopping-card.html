@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/motorcycle-list.css">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function (){
+            function loadShoppingCard(){
+                if(localStorage.getItem("shoppingCard")==undefined){
+                    $('#content').html("Giỏ hàng còn rỗng");
+                }
+                else{
+                    $.post("/getshoppingcard",{
+                    arrProductId:localStorage.getItem("shoppingCard").replace('[','(').replace(']',')')
+                },function(data,status){
+                    $('#content').html(data);
+                });
+                }
+            }
+            loadShoppingCard();
+        });
+
+        function loadShoppingCard(){
+                if(localStorage.getItem("shoppingCard")==undefined){
+                    $('#content').html("Giỏ hàng còn rỗng");
+                }
+                else{
+                    $.post("/getshoppingcard",{
+                    arrProductId:localStorage.getItem("shoppingCard").replace('[','(').replace(']',')')
+                },function(data,status){
+                    $('#content').html(data);
+                });
+                }
+            }
+
+        function cancelcard(){
+            localStorage.removeItem("shoppingCard");
+               window.location.href="/home";
+        }
+        function buyProduct(){
+            var arrProduct=$(".product").toArray();
+            var arrSP=[];
+            arrProduct.forEach(item=>{
+                arrSP.push({
+                    MaSP:$(item).attr('productid'),
+                    SoLuong:$("#soluong").val(),
+                    GiaBan:$(item).attr('price')
+                })
+            })
+            $.post("/buyProduct",{
+                MaKH:JSON.parse(localStorage.getItem("user")).id,
+                arrSP:arrSP
+            },function(data,status){
+                alert("Tao don hang thanh cong");
+            });
+            // var user =localStorage.getItem("user");
+            // var objusser=JSON.parse(user);
+            // window.location.href=`/confirm/${objusser.id}`;
+        } 
+        function onDeleteProduct(productId){
+           var shoppingCard = JSON.parse(localStorage.getItem("shoppingCard"));
+           var shoppingCard2 = [];
+           shoppingCard.forEach((item)=>{
+               if(item !== productId){
+                shoppingCard2.push(item);
+               }
+           });
+           localStorage.setItem("shoppingCard",JSON.stringify(shoppingCard2));
+           loadShoppingCard();
+        }    
+    </script>
+    <title>Motorcycle List</title>
+</head>
+<body>
+    <div class="container">
+        <header class="row pannel">SAIGON'S MOTORBIKE</header>
+        <nav class="row" style="background-color: rgb(12, 10, 10)">
+        </nav>
+        <section class="row">
+            <article class="col-9" >
+               <center><h1>SHOPPING CARD</h1></center>
+            <div>
+                <div id="content"></div>
+            </div><br><br>
+            <input type="button" value="Mua" onclick="buyProduct()"><br><br>
+            <input type="button" value="Hủy toàn bộ sản phẩm" onclick="cancelcard()">
+            </article>
+            <aside class="col-3">
+                <br><br><br>
+            </aside>
+        </section>
+    </div>
+</body>
+</html>

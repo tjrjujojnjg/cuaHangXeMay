@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .row{
+            color: #d6c90f;
+        }
+        header{
+            margin: 0  auto;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            justify-content: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: cornsilk;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        section{
+            height: 450px;
+        }
+        footer{
+            height: 50px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+                    $(document).ready(function(){
+                    $.get("http://localhost:1080/administrator/getview",(data,status)=>{
+                    $('#content').html(data);
+                });
+            });
+            var user =localStorage.getItem("useradmin");
+            if(user == null || user == undefined || user === ""){
+            window.location.href="/error_admin";
+            }
+            function logout(){
+             localStorage.removeItem("useradmin");
+              window.location.href="/error_admin";
+         }
+    </script>
+   
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <div class="container">
+        <header class="row" style="background-color: rgb(1, 1, 27); color: white;">ADMINISTRATER</header>
+        <nav class="row" style="background-color: rgb(4, 63, 23);">
+            <a href="/administrator/add">|ADD|</a>
+            <img src="../images/id.jpg" style="width: 50px;height: 40px;border: 1px;">
+            <input type="button" value="Đăng xuất" onclick="logout()"/>
+        </nav>
+        <section class="row">
+            <article class="col-10" style="background-color: rgb(2, 31, 2);">
+                <div id="content"></div>
+            </article>
+            <aside class="col-2" style="background-color: rgb(20, 12, 73);">Aside</aside>
+        </section>
+<footer class="row" style="background-color: dodgerblue;">Footer</footer>
+    </div>
+</body>
+</html>

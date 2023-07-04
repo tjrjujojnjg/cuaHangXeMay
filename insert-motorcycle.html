@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <script>
+    var user =localStorage.getItem("useradmin");
+    if(user == null || user == undefined || user === ""){
+      window.location.href="/error_admin";
+    }
+    function logout(){
+             localStorage.removeItem("useradmin");
+              window.location.href="/error_admin";
+         }
+</script>
+    <style>
+        .row{
+            color: yellow;
+            font-weight: bold;
+        }
+        header{
+            margin: 0  auto;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            justify-content: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: cornsilk;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        section{
+            height: 450px;
+        }
+        footer{
+            height: 50px;
+        }
+        th{
+            width: 250px;
+        }
+        .td{
+            border: 1px groove yellowgreen;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motorcycle Insert</title>
+</head>
+<body>
+    <div class="container">
+        <header class="row" style="background-color: rgb(1, 1, 27); color: white;">ADMINISTRATOR</header>
+        <nav class="row" style="background-color: rgb(129, 189, 159);">
+          <a href="/administrator/view">|VIEW|</a>
+          <a href="/administrator/receipt">|RECEIPT|</a>
+            <img src="../../images/id.jpg" style="width: 50px;height: 40px;border: 1px;"/>
+            <input type="button" value="Logout" onclick="logout()"/>
+        </nav>
+        <section class="row" style="background-color:rgb(59, 88, 4)">
+            <article class="col-8">
+                <center><h1>Insert Motorcycle</h1></center>
+                <form method="post" action="/administrator/add" enctype="application/x-www-form-urlencoded">
+                  <div class="form-group col-md-4">
+                    <label for="cars">Brand</label>
+                            <select name="cbcom" id="cars" class="form-control">
+                                <option value="Yamaha">Yamaha</option>
+                                <option value="Suzuki">Suzuki</option>
+                                <option value="Honda">Honda</option>
+                                <option value="SYM">SYM</option>
+                            </select> 
+                  </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <label for="pdimage">Product Image</label>
+                        <input type="text" class="form-control" name="txtimage" id="pdimage" placeholder="abc.png">
+                      </div>
+                      <div class="form-group col-md-9">
+                        <label for="pdname">Product Name</label>
+                        <input type="text" class="form-control" name="txtname" id="pdname">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <label for="pdtype">Product Type</label>
+                        <input type="text" class="form-control" name="txttype" id="pdtype" placeholder="ymhfx">
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label for="pdprice">Product Price</label>
+                        <input type="text" class="form-control" name="txtprice" id="pdprice">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                  </form>
+            </article>
+            <aside class="col-4" style="background-color: rgb(20, 12, 73);">Aside</aside>
+        </section>
+        <footer class="row" style="background-color: dodgerblue;">Footer</footer>
+    </div>
+
+</body>
+</html>

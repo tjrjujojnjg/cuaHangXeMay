@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .row{
+            color:rgb(0, 0, 0);
+        }
+        header{
+            margin: 0  auto;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            justify-content: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: cornsilk;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        section{
+            height: 450px;
+        }
+        footer{
+            height: 50px;
+        }
+        /*Hieu ung quang cao*/
+        .mainBox{
+            perspective: 900px;
+        }
+        .cube{
+            font-size: 4em;
+            width: 2em;
+            color: #fff;
+            margin: 3em auto;
+            transform-style: preserve-3d;
+            transform: rotateX(-45deg) rotateY(30deg);
+            animation: cubes 3.5s linear infinite;
+        }
+        @keyframes cubes{
+            0%{ transform: rotateY(0deg);}
+            100%{ transform: rotateY(360deg) scale(1.0) rotateX(40deg);}
+        }
+        .side{
+            position: absolute;
+            width: 2em;
+            height: 2em;
+            text-align: center;
+            line-height: 2em;
+            background-size: cover;
+            border: 5px solid #122e16;
+            text-shadow: 0 0 10px #00fff2, 0 0 20px #00fff2, 0 0 30px #00fff2, 0 0 40px #00fff2, 0 0 50px #00fff2, 0 0 60px #00fff2, 0 0 70px #00fff2, 0 0 90px #00fff2;
+        }
+        .front{transform: translateZ(1em);}
+        .top{transform: rotateX(90deg) translateZ(1em);}
+        .right{transform: rotateY(90deg) translateZ(1em);}
+        .left{transform: rotateY(-90deg) translateZ(1em);}
+        .bottom{transform: rotateX(-90deg) translateZ(1em);}
+        .back{transform: rotateY(-180deg) translateZ(1em);}
+        /*end */
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var arr=window.location.href.split('/');
+        $.get("http://localhost:1080/gethistory/"+arr[arr.length-1],(data,status)=>{
+            $('#content').html(data);
+        });
+        var user =localStorage.getItem("user");
+        var objusser=JSON.parse(user);
+        $("#user").html('Cảm ơn '+objusser.username+' đã ủng hộ SAIGON MOTORBIKE');
+    });   
+    </script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử mua hàng</title>
+</head>
+<body>
+    <div class="container">
+        <header class="row" style="background-color: rgb(1, 1, 27); color: white;">LỊCH SỬ MUA HÀNG</header>
+        <nav class="row" style="background-color: rgb(5, 25, 63);">Menu</nav>
+        <section class="row">
+            <article class="col-6" style="background-color:#336B87;">
+                <div id="content" style="font-weight: bold;"></div>
+            </article>
+            <aside class="col-6" style="background-color: black;">
+                <div id="user" style="color: white; font-weight: bold; font-size: 20px;"></div>
+                <div class="mainBox">
+                    <div class="cube">
+                        <div class="side front">S</div>
+                        <div class="side back">A</div>
+                        <div class="side right">I</div>
+                        <div class="side left">G</div>
+                        <div class="side top">O</div>
+                        <div class="side bottom">N</div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+        <footer class="row" style="background-color: dodgerblue;">Footer</footer>
+    </div>
+</body>
+</html>
